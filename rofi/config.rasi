@@ -4,24 +4,26 @@ configuration {
   drun-display-format: "{name}";
   font: "JetBrainsMono Nerd Font Mono Bold 10.5";
   modi: "window,run,drun";
-  show-icons: true;
+  show-icons: false;
   icon-theme: "Papirus-Dark";
-terminal: "alacritty";
+  terminal: "alacritty";
 }
 
 @theme "/dev/null"
 
+// for nordic theme replace with the following:
+
+//  bg:#2e3440;   
+//  bg-alt:#4c566A;
+//  fg: #FFF;
+//  fg-alt: #787c99;
+
 * {
-  bg:#2e3440;    
-  
-  bg-alt:#4c566A;
- 
-
-  fg: #FFF;
-  fg-alt: #787c99;
-
+  bg:#002B36;    
+  bg-alt:#073642;
+  fg: #eee8D5;
+  fg-alt: #839496;
   background-color: @bg;
-  
   border: 0;
   margin: 0;
   padding: 0;
@@ -29,7 +31,7 @@ terminal: "alacritty";
 }
 
 window {
-  width: 60%;
+  width: 40%;
 }
 
 element {
@@ -79,7 +81,6 @@ prompt {
   padding: 12 0 0 12;
   text-color: @fg;
 }
-
 
 /* vim: ft=sass
 
