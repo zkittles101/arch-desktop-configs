@@ -34,7 +34,7 @@ window {
   border: 5 ;
   border-color: @fg-alt;
   width: 650px;
-  height: 285px;}
+  height: 320px;}
 
 element {
   padding: 8 0;
