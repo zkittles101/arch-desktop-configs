@@ -6,12 +6,12 @@
 options=" Lock\n Logout\n Reboot\n Shutdown"
 
 # Show the rofi menu with the specified font
-chosen="$(echo -e "$options" | rofi  -dmenu -i -p "Power Menu:" -font "JetBrainsMono Nerd Font Medium 16.5" )"
+chosen="$(echo -e "$options" | rofi  -dmenu -i -p "Power Menu:" -font "JetBrainsMono Nerd Font Medium 16.5" -theme-str 'window {height:270px; }' )"
 
 
 # Function to confirm action with buttons (Yes/No), defaulting to "No"
 confirm_action() {
-    rofi -dmenu -i -p "Are you sure?" -mesg "Select 'Yes' to confirm." -markup-rows -font "JetBrainsMono Nerd Font Medium 16.5"  <<< $' No\n Yes'
+    rofi -dmenu -i -p "Are you sure?" -mesg "Select 'Yes' to confirm." -theme-str 'window {height:200px; }' -markup-rows -font "JetBrainsMono Nerd Font Medium 16.5"  <<< $' No\n Yes'
 }
 
 # Take action based on the selected option
