@@ -1,9 +1,10 @@
 configuration {
+  modes: "window,run,drun,combi,keys,filebrowser,emoji";
   display-drun: "Applications:";
   display-window: "Windows:";
   drun-display-format: "{name}";
   font: "JetBrainsMono Nerd Font Mono Medium 16.5";
-  modi: "window,run,drun,combi,keys,filebrowser";
+  modi: "window,run,drun,combi,keys,filebrowser,emoji";
   show-icons: true;
   icon-theme: "Papirus-Dark";
   terminal: "alacritty";
