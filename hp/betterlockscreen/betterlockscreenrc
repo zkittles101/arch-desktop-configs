@@ -12,9 +12,9 @@ solid_color=333333
 wallpaper_cmd="feh --bg-fill"
 quiet=false
 
-# default theme
-loginbox=586e75
-loginshadow=586e75
+# default theme  
+loginbox=839496     
+loginshadow=839496   # use the same color as the loginbox
 locktext="enter pass."
 font="JetBrains Mono"   # use the bold ttf file which you can download from the JetBrains site
 ringcolor=ffffffff
