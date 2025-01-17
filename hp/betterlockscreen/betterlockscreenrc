@@ -24,20 +24,24 @@ ringvercolor=ffffffff
 insidevercolor=00000000
 ringwrongcolor=ffffffff
 insidewrongcolor=d23c3dff
-timecolor=073642
+# timecolor=073642
 time_format="%H:%M:%S"
-greetercolor=073642
-layoutcolor=073642
+# greetercolor=073642
+# layoutcolor=073642
 keyhlcolor=d23c3dff
 bshlcolor=d23c3dff
 veriftext=""
 verifcolor=ffffffff
 wrongtext="retry!"
-wrongcolor=002b36
+# wrongcolor=002b36
 modifcolor=d23c3dff
 bgcolor=000000ff
 
-
+#nord theme modifications
+timecolor=2E3440
+greetercolor=2E3440
+layoutcolor=2E3440
+wrongcolor=2E3440
 #
 # expert options (change at own risk!)
 #
