@@ -6,18 +6,19 @@ configuration {
 
 @theme "/dev/null"
 
-// for nordic theme replace with the following:
+// for solarized theme replace with the following:
 
-//  bg:#2e3440;   
-//  bg-alt:#4c566A;
-//  fg: #FFF;
-//  fg-alt: #787c99;
+  // bg:#002B36;     
+  // bg-alt:#073642;
+  // fg: #eee8D5;
+  // fg-alt: #839496;
+
 
 * {
-  bg:#002B36;    
-  bg-alt:#073642;
-  fg: #eee8D5;
-  fg-alt: #839496;
+ bg:#2e3440;   
+ bg-alt:#4c566A;
+ fg: #FFF;
+ fg-alt: #787c99;
   background-color: @bg;
   border: 0;
   margin: 0;
