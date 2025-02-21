@@ -2,15 +2,14 @@
 -- https://github.com/NvChad/ui/blob/v2.5/lua/nvconfig.lua
 
 local options = {
-
   base46 = {
-    theme = "solarized_dark", -- default theme
+    theme = "nord", -- default theme
     hl_add = {},
     hl_override = {},
     integrations = {},
     changed_themes = {},
     transparency = true,
-    -- theme_toggle = { "solarized_dark", "solarized_osaka" },
+    -- theme_toggle = { "nord", "solarized_osaka" },
   },
 
   ui = {
@@ -42,10 +41,11 @@ local options = {
         "##             ",
         "####    /  #   ",
         " ######/  ###  ",
-        "  #####    #  ",
-        "             ",
-    },
-    buttons = {
+        "  #####    #   ",
+        "               ",
+      },
+
+      buttons = {
         { "  Find File", "Spc f f", "Telescope find_files" },
         { "󰈚  Recent Files", "Spc f o", "Telescope oldfiles" },
         { "󰈭  Find Word", "Spc f w", "Telescope live_grep" },
@@ -79,5 +79,6 @@ local options = {
   mason = { cmd = true, pkgs = {} },
 }
 
+-- Merge with chadrc if it exists
 local status, chadrc = pcall(require, "chadrc")
 return vim.tbl_deep_extend("force", options, status and chadrc or {})
