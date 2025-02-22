@@ -4,7 +4,7 @@ vim.g.mapleader = " "
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
-if not vim.uv.fs_stat(lazypath) then
+if not vim.loop.fs_stat(lazypath) then
   local repo = "https://github.com/folke/lazy.nvim.git"
   vim.fn.system { "git", "clone", "--filter=blob:none", repo, "--branch=stable", lazypath }
 end
@@ -20,6 +20,9 @@ require("lazy").setup({
     lazy = false,
     branch = "v2.5",
     import = "nvchad.plugins",
+    config = function()
+      require "options"
+    end,
   },
 
   { import = "plugins" },
@@ -28,10 +31,81 @@ require("lazy").setup({
 -- load theme
 dofile(vim.g.base46_cache .. "defaults")
 dofile(vim.g.base46_cache .. "statusline")
+dofile(vim.g.base46_cache .. "nvdash")
 
-require "options"
 require "nvchad.autocmds"
 
 vim.schedule(function()
   require "mappings"
 end)
+
+-- Mason setup
+require("mason").setup()
+
+-- Mason LSP config setup
+require("mason-lspconfig").setup({
+    ensure_installed = { "pylsp", "ast_grep", "gopls", "cssls", "html", "quick_lint_js", "marksman","tailwindcss", "ts_ls" },
+})
+
+-- LSP config setup
+local lspconfig = require('lspconfig')
+
+lspconfig.tailwindcss.setup{}
+lspconfig.ts_ls.setup{}
+lspconfig.html.setup{}
+lspconfig.cssls.setup{}
+lspconfig.quick_lint_js.setup{}
+lspconfig.pylsp.setup{}
+lspconfig.gopls.setup({})
+lspconfig.ast_grep.setup{}
+lspconfig.marksman.setup{}
+-- nvdash lua file 
+
+local api = vim.api
+local config = require "nvconfig"
+local new_cmd = api.nvim_create_user_command
+
+vim.o.statusline = "%!v:lua.require('nvchad.stl." .. config.ui.statusline.theme .. "')()"
+
+if config.ui.tabufline.enabled then
+  require "nvchad.tabufline.lazyload"
+end
+
+-- Command to toggle NvDash
+new_cmd("Nvdash", function()
+  if vim.g.nvdash_displayed then
+    require("nvchad.tabufline").close_buffer()
+  else
+    require("nvchad.nvdash").open()
+  end
+end, {})
+
+new_cmd("NvCheatsheet", function()
+  if vim.g.nvcheatsheet_displayed then
+    vim.cmd "bw"
+  else
+    require("nvchad.cheatsheet." .. config.cheatsheet.theme)()
+  end
+end, {})
+
+vim.schedule(function()
+  -- load nvdash only on empty file
+  if config.ui.nvdash.load_on_startup then
+    local buf_lines = api.nvim_buf_get_lines(0, 0, 1, false)
+    local no_buf_content = api.nvim_buf_line_count(0) == 1 and buf_lines[1] == ""
+    local bufname = api.nvim_buf_get_name(0)
+
+    if bufname == "" and no_buf_content then
+      require("nvchad.nvdash").open()
+    end
+  end
+
+  require "nvchad.au"
+end)
+
+
+
+if vim.version().minor < 10 then
+  vim.notify "Please update neovim version to v0.10 at least! NvChad only supports v0.10+"
+end
+
