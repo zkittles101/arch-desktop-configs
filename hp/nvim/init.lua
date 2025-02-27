@@ -13,6 +13,11 @@ vim.opt.rtp:prepend(lazypath)
 
 local lazy_config = require "configs.lazy"
 
+-- load theme
+dofile(vim.g.base46_cache .. "defaults")
+dofile(vim.g.base46_cache .. "statusline")
+dofile(vim.g.base46_cache .. "nvdash")
+
 -- load plugins
 require("lazy").setup({
   {
@@ -28,10 +33,6 @@ require("lazy").setup({
   { import = "plugins" },
 }, lazy_config)
 
--- load theme
-dofile(vim.g.base46_cache .. "defaults")
-dofile(vim.g.base46_cache .. "statusline")
-dofile(vim.g.base46_cache .. "nvdash")
 
 require "nvchad.autocmds"
 
@@ -44,22 +45,22 @@ require("mason").setup()
 
 -- Mason LSP config setup
 require("mason-lspconfig").setup({
-    ensure_installed = { "pylsp", "ast_grep", "gopls", "cssls", "html", "quick_lint_js", "marksman","tailwindcss", "ts_ls" },
+  ensure_installed = { "pylsp", "ast_grep", "gopls", "cssls", "html", "quick_lint_js", "marksman", "tailwindcss", "ts_ls" },
 })
 
 -- LSP config setup
 local lspconfig = require('lspconfig')
 
-lspconfig.tailwindcss.setup{}
-lspconfig.ts_ls.setup{}
-lspconfig.html.setup{}
-lspconfig.cssls.setup{}
-lspconfig.quick_lint_js.setup{}
-lspconfig.pylsp.setup{}
+lspconfig.tailwindcss.setup {}
+lspconfig.ts_ls.setup {}
+lspconfig.html.setup {}
+lspconfig.cssls.setup {}
+lspconfig.quick_lint_js.setup {}
+lspconfig.pylsp.setup {}
 lspconfig.gopls.setup({})
-lspconfig.ast_grep.setup{}
-lspconfig.marksman.setup{}
--- nvdash lua file 
+lspconfig.ast_grep.setup {}
+lspconfig.marksman.setup {}
+-- nvdash lua file
 
 local api = vim.api
 local config = require "nvconfig"
@@ -103,9 +104,54 @@ vim.schedule(function()
   require "nvchad.au"
 end)
 
+-- Add to ~/.config/nvim/init.lua
+
+-- Shared function to generate HTML (without opening browser)
+local function generate_html()
+  local md_file = vim.fn.expand('%:p')  -- Full path to current Markdown file
+  local base_name = vim.fn.expand('%:t:r')  -- Filename without extension
+
+  -- Define fixed paths (customize as needed)
+  local web_exports = '/mnt/DaBox/Obsidian Vaults/Personal/web-exports/'
+  local web_assets = '/mnt/DaBox/Obsidian Vaults/Personal/web-assets/'
+
+  -- Construct paths with proper escaping for spaces
+  local html_file = web_exports .. base_name .. '.html'
+  local template = web_assets .. 'template.html'
+  local css_file = web_assets .. 'style.css'
+
+  -- Build Pandoc command
+  local pandoc_cmd = string.format(
+    "pandoc '%s' -o '%s' --template='%s' --katex --css='%s'",
+    md_file, html_file, template, css_file
+  )
+
+  -- Execute silently (no 'Press ENTER' prompt)
+  vim.cmd('silent !' .. pandoc_cmd)
+  vim.notify("HTML generated: " .. html_file, vim.log.levels.INFO)
+end
+
+-- Keybinding 1: Generate HTML only
+vim.keymap.set('n', '<leader>mg', generate_html, {
+  noremap = true,
+  desc = 'Generate HTML from Markdown (no preview)'
+})
+
+-- Keybinding 2: Generate HTML + Open/Refresh Browser
+vim.keymap.set('n', '<leader>pmd', function()
+  generate_html()  -- First generate the HTML
+
+  -- Open in browser (reuses existing tab if possible)
+  local html_file = '/mnt/DaBox/Obsidian Vaults/Personal/web-exports/'
+    .. vim.fn.expand('%:t:r') .. '.html'
+  -- Try to refresh existing tab first, fallback to new tab
+  vim.cmd("silent !chromium '" .. html_file .. "'&")
+end, {
+  noremap = true,
+  desc = 'Generate HTML and preview in browser'
+})
 
 
 if vim.version().minor < 10 then
   vim.notify "Please update neovim version to v0.10 at least! NvChad only supports v0.10+"
 end
-
