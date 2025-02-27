@@ -112,8 +112,8 @@ local function generate_html()
   local base_name = vim.fn.expand('%:t:r')  -- Filename without extension
 
   -- Define fixed paths (customize as needed)
-  local web_exports = '/mnt/DaBox/Obsidian Vaults/Personal/web-exports/'
-  local web_assets = '/mnt/DaBox/Obsidian Vaults/Personal/web-assets/'
+  local web_exports = '/mnt/DaBox/Markdown-Notes/.web-exports/'
+  local web_assets = '/mnt/DaBox/Markdown-Notes/.web-assets/'
 
   -- Construct paths with proper escaping for spaces
   local html_file = web_exports .. base_name .. '.html'
@@ -142,7 +142,7 @@ vim.keymap.set('n', '<leader>pmd', function()
   generate_html()  -- First generate the HTML
 
   -- Open in browser (reuses existing tab if possible)
-  local html_file = '/mnt/DaBox/Obsidian Vaults/Personal/web-exports/'
+  local html_file = '/mnt/DaBox/Markdown-Notes/.web-exports/'
     .. vim.fn.expand('%:t:r') .. '.html'
   -- Try to refresh existing tab first, fallback to new tab
   vim.cmd("silent !chromium '" .. html_file .. "'&")

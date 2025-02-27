@@ -80,7 +80,7 @@ return {
       vim.g.vimtex_view_forward_search_on_start = false
       vim.g.vimtex_compiler_latexmk = {
         aux_dir = "/home/e/.texfiles/",
-        out_dir = "/home/e/.texfiles/",
+        out_dir = "/mnt/DaBox/Markdown-Notes/.file-exports/",
       }
     end
   },
